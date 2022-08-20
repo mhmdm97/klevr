@@ -24,64 +24,76 @@ namespace klevr.Concrete.EF
             modelBuilder.Entity<Transfer>()
                 .HasOne(p => p.OriginUser)
                 .WithMany(b => b.OutgoingTransfers)
-                .HasForeignKey(p => p.OriginUserId);
+                .HasForeignKey(p => p.OriginUserId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Transfer>()
                 .HasOne(p => p.TargetUser)
                 .WithMany(b => b.IncomingTransfers)
-                .HasForeignKey(p => p.TargetUserId);
+                .HasForeignKey(p => p.TargetUserId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             //seed data for testing purposes
+            var user1 = Guid.NewGuid();
+            var user2 = Guid.NewGuid();
+            var branch = Guid.NewGuid();
+            modelBuilder.Entity<Branch>().HasData(new Branch
+            {
+                BranchId = branch,
+                Name = "Test branch"
+            });
             modelBuilder.Entity<User>().HasData(new User
             {
-                UserId = "0",
+                UserId = user1,
                 FirstName = "Mohamad",
                 MiddleName = "Bassam",
                 LastName = "Mortada",
                 DOB = new DateTime(1997, 2, 9),
-                Gender = 0
+                Gender = 0,
+                BranchId = branch
             });
             modelBuilder.Entity<User>().HasData(new User
             {
-                UserId = "1",
+                UserId = user2,
                 FirstName = "Nour",
                 MiddleName = "Bassam",
                 LastName = "Mortada",
                 DOB = new DateTime(1998, 11, 28),
-                Gender = 1
+                Gender = 1,
+                BranchId = branch
             });
 
             modelBuilder.Entity<UserLimits>().HasData(new UserLimits
             {
-                UserLimitsId = "0",
+                UserLimitsId = Guid.NewGuid(),
                 TransactionAmountLimit = 500,
                 DailyAmountLimit = 1000,
-                UserId = "0"
+                UserId = user1
             });
 
             modelBuilder.Entity<UserLimits>().HasData(new UserLimits
             {
-                UserLimitsId = "1",
+                UserLimitsId = Guid.NewGuid(),
                 TransactionAmountLimit = 200,
                 DailyAmountLimit = 1000,
-                UserId = "1"
+                UserId = user2
             });
 
             modelBuilder.Entity<Transfer>().HasData(new Transfer
             {
-                TransferId = "0",
+                TransferId = Guid.NewGuid(),
                 TransferAmount = 300,
                 TransferDate = DateTime.Now,
-                OriginUserId = "0",
-                TargetUserId = "1"
+                OriginUserId = user1,
+                TargetUserId = user2
             });
             modelBuilder.Entity<Transfer>().HasData(new Transfer
             {
-                TransferId = "1",
+                TransferId = Guid.NewGuid(),
                 TransferAmount = 400,
                 TransferDate = DateTime.Now,
-                OriginUserId = "0",
-                TargetUserId = "1"
+                OriginUserId = user1,
+                TargetUserId = user2
             });
         }
     }

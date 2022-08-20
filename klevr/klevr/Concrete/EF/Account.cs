@@ -6,13 +6,13 @@ namespace klevr.Concrete.EF
     {
         [Required]
         [Key]
-        public string AccountNumber { get; set; }
+        public Guid AccountNumber { get; set; }
         public string AccountCurrency { get; set; }
         public int AccountType { get; set; }
         public int AccountStatus { get; set; }
 
         //relations
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
         public User User { get; set; }
     }
 }

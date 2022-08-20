@@ -6,14 +6,14 @@ namespace klevr.Concrete.EF
     {
         [Required]
         [Key]
-        public string TransferId { get; set; }
+        public Guid TransferId { get; set; }
         public double TransferAmount { get; set; }
         public DateTime TransferDate { get; set; }
 
         //relations
-        public string OriginUserId { get; set; }
+        public Guid OriginUserId { get; set; }
         public User OriginUser { get; set; }
-        public string TargetUserId { get; set; }
+        public Guid TargetUserId { get; set; }
         public User TargetUser { get; set; }
     }
 }

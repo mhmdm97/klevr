@@ -9,6 +9,6 @@ namespace klevr.Core.Repository
     public interface IUserLimitRepository
     {
         public List<UserLimits> GetUserLimits();
-        public BaseViewModel CheckTransactionValidity(string userId, double transactionAmount);
+        public BaseViewModel CheckTransactionValidity(Guid userId, double transactionAmount);
     }
 }

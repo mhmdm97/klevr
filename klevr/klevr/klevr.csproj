@@ -17,6 +17,7 @@
     <None Remove="InMemoryCacheModule\" />
     <None Remove="System.Runtime.Caching" />
     <None Remove="Core\Repository\" />
+    <None Remove="Core\TransferParamModel\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.17" />
@@ -32,5 +33,6 @@
     <Folder Include="Helpers\" />
     <Folder Include="InMemoryCacheModule\" />
     <Folder Include="Core\Repository\" />
+    <Folder Include="Core\TransferParamModel\" />
   </ItemGroup>
 </Project>

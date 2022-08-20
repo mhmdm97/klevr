@@ -67,12 +67,12 @@ namespace klevr.Concrete.Persistence
             return false;
         }
 
-        public BaseViewModel CheckTransactionValidity(string userId, double transactionAmount)
+        public BaseViewModel CheckTransactionValidity(Guid userId, double transactionAmount)
         {
             try
             {
                 var userLimit = _db.UserLimits.Where(uL => uL.UserId == userId).FirstOrDefault();
-                if (userLimit != null)
+                if (userLimit == null)
                     return new BaseViewModel { Success = false, Message = "We ran into an error!" };
                 //check transaction limit 
                 if (transactionAmount > userLimit.TransactionAmountLimit)

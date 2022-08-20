@@ -6,12 +6,12 @@ namespace klevr.Concrete.EF
     {
         [Required]
         [Key]
-        public string UserLimitsId { get; set; }
+        public Guid UserLimitsId { get; set; }
         public double TransactionAmountLimit { get; set; }
         public double DailyAmountLimit { get; set; }
 
         //relations
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
         public User User { get; set; }
     }
 }

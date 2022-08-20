@@ -37,7 +37,7 @@ namespace klevr.Controllers
 
         }
         [HttpGet("CheckTransferValidity")]
-        public IActionResult CheckTransferValidity(string userId, double transactionAmount)
+        public IActionResult CheckTransferValidity(Guid userId, double transactionAmount)
         {
             try
             {

@@ -7,7 +7,7 @@ namespace klevr.Concrete.EF
     {
         [Required]
         [Key]
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MiddleName { get; set; }
@@ -15,7 +15,7 @@ namespace klevr.Concrete.EF
         public int Gender { get; set; }
 
         //relations
-        public string BranchId { get; set; }
+        public Guid BranchId { get; set; }
         public Branch Branch { get; set; }
 
         public List<Account> Accounts { get; set; }

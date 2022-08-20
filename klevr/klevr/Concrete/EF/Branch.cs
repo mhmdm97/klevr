@@ -7,7 +7,7 @@ namespace klevr.Concrete.EF
     {
         [Required]
         [Key]
-        public string BranchId { get; set; }
+        public Guid BranchId { get; set; }
         public string Name { get; set; }
         //relations
         public List<User> Users { get; set; }
