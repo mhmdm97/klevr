@@ -24,7 +24,7 @@ namespace klevr.Concrete.Persistence
             _db = db;
         }
 
-        public List<UserLimits> GetUserLimitsAsync()
+        public List<UserLimits> GetUserLimits()
         {
             try
             {

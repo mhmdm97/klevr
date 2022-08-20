@@ -7,6 +7,6 @@ namespace klevr.Core.Repository
 {
     public interface IUserLimitRepository
     {
-        public List<UserLimits> GetUserLimitsAsync();
+        public List<UserLimits> GetUserLimits();
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using klevr.Concrete.EF;
+using klevr.Concrete.Persistence;
+using klevr.Core.Repository;
 using klevr.Helpers;
 using klevr.InMemoryCacheModule;
 using Microsoft.AspNetCore.Builder;
@@ -48,7 +50,11 @@ namespace klevr
             var appSettingsSection = Configuration.GetSection("CacheSettings");
             services.Configure<CacheSettings>(appSettingsSection);
 
-            //init caching module
+
+            //inject repos
+            services.AddTransient<IUserLimitRepository, UserLimitRepository>();
+
+            //inject services
             services.AddScoped<ICacheService, CacheService>();
         }
 
