@@ -67,7 +67,7 @@ namespace klevr.Concrete.Persistence
             return false;
         }
 
-        public BaseViewModel CheckTransactionValidity(Guid userId, double transactionAmount)
+        public BaseViewModel CheckTransactionValidity(Guid userId, Guid accountId, double transactionAmount)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace klevr.Concrete.Persistence
                     return new BaseViewModel { Success = false, Message = "Transaction over limit" };
 
                 //check daily limit
-                var transactions = _transferRepository.GetUserDailyTransfers(userId);
+                var transactions = _transferRepository.GetUserDailyTransfers(accountId);
                 double transactionsSum = 0;
                 foreach (var transaction in transactions)
                 {

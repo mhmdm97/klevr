@@ -29,13 +29,25 @@ namespace klevr.Controllers
         {
             try
             {
-                var res = await _transferRepository.ExecuteNewTransferAsync(model.OriginUserId, model.TargetUserId, model.TransferAmount);
+                var res = await _transferRepository.ExecuteNewTransferAsync(model.OriginAccountId, model.TargetAccountId, model.TransferAmount);
                 if (res)
                     return StatusCode(StatusCodes.Status200OK);
             }
             catch (Exception) { }
             return StatusCode(StatusCodes.Status500InternalServerError);
 
+        }
+        [HttpGet("GetTransactionsOverPeriod")]
+        public IActionResult GetTransactionsOverPeriod(DateTime start, DateTime end)
+        {
+            try
+            {
+                var res = _transferRepository.GetBatchOfTransfersOverPeriod(start, end);
+                if(res != null)
+                    return StatusCode(StatusCodes.Status200OK, res);
+            }
+            catch (Exception) { }
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
 }

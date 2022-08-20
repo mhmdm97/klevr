@@ -11,9 +11,9 @@ namespace klevr.Concrete.EF
         public DateTime TransferDate { get; set; }
 
         //relations
-        public Guid OriginUserId { get; set; }
-        public User OriginUser { get; set; }
-        public Guid TargetUserId { get; set; }
-        public User TargetUser { get; set; }
+        public Guid OriginAccountId { get; set; }
+        public Account OriginAccount { get; set; }
+        public Guid TargetAccountId { get; set; }
+        public Account TargetAccount { get; set; }
     }
 }

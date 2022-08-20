@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 namespace klevr.Concrete.EF
 {
@@ -14,5 +15,8 @@ namespace klevr.Concrete.EF
         //relations
         public Guid UserId { get; set; }
         public User User { get; set; }
+
+        public List<Transfer> OutgoingTransfers { get; set; }
+        public List<Transfer> IncomingTransfers { get; set; }
     }
 }

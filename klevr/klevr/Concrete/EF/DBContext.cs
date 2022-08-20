@@ -22,21 +22,22 @@ namespace klevr.Concrete.EF
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Transfer>()
-                .HasOne(p => p.OriginUser)
+                .HasOne(p => p.OriginAccount)
                 .WithMany(b => b.OutgoingTransfers)
-                .HasForeignKey(p => p.OriginUserId)
+                .HasForeignKey(p => p.OriginAccountId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Transfer>()
-                .HasOne(p => p.TargetUser)
+                .HasOne(p => p.TargetAccount)
                 .WithMany(b => b.IncomingTransfers)
-                .HasForeignKey(p => p.TargetUserId)
+                .HasForeignKey(p => p.TargetAccountId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             //seed data for testing purposes
             var user1 = Guid.NewGuid();
             var user2 = Guid.NewGuid();
             var branch = Guid.NewGuid();
+            var account = Guid.NewGuid();
             modelBuilder.Entity<Branch>().HasData(new Branch
             {
                 BranchId = branch,
@@ -63,6 +64,15 @@ namespace klevr.Concrete.EF
                 BranchId = branch
             });
 
+            modelBuilder.Entity<Account>().HasData(new Account
+            {
+                AccountNumber = account,
+                AccountCurrency = "USD",
+                AccountType = 1,
+                AccountStatus = 1,
+                UserId = user1
+            });
+
             modelBuilder.Entity<UserLimits>().HasData(new UserLimits
             {
                 UserLimitsId = Guid.NewGuid(),
@@ -84,16 +94,16 @@ namespace klevr.Concrete.EF
                 TransferId = Guid.NewGuid(),
                 TransferAmount = 300,
                 TransferDate = DateTime.Now,
-                OriginUserId = user1,
-                TargetUserId = user2
+                OriginAccountId = account,
+                TargetAccountId = account
             });
             modelBuilder.Entity<Transfer>().HasData(new Transfer
             {
                 TransferId = Guid.NewGuid(),
                 TransferAmount = 400,
                 TransferDate = DateTime.Now,
-                OriginUserId = user1,
-                TargetUserId = user2
+                OriginAccountId = account,
+                TargetAccountId = account
             });
         }
     }

@@ -15,25 +15,25 @@ namespace klevr.Concrete.Persistence
             _db = db;
         }
 
-        public List<Transfer> GetUserDailyTransfers(Guid userId)
+        public List<Transfer> GetUserDailyTransfers(Guid originId)
         {
             try
             {
-                List<Transfer> transfers = _db.Transfers.Where(t => t.OriginUserId == userId && t.TransferDate > DateTime.Now.Date).ToList();
+                List<Transfer> transfers = _db.Transfers.Where(t => t.OriginAccountId == originId && t.TransferDate > DateTime.Now.Date).ToList();
                 return transfers;
             }
             catch(Exception) { }
             return null;
         }
 
-        public async Task<bool> ExecuteNewTransferAsync(Guid userId, Guid targetId, double transferAmount)
+        public async Task<bool> ExecuteNewTransferAsync(Guid originId, Guid targetId, double transferAmount)
         {
             try
             {
                 //create new transfer
                 var transfer = new Transfer();
-                transfer.OriginUserId = userId;
-                transfer.TargetUserId = targetId;
+                transfer.OriginAccountId = originId;
+                transfer.TargetAccountId = targetId;
                 transfer.TransferAmount = transferAmount;
                 transfer.TransferDate = DateTime.Now;
 
@@ -44,6 +44,17 @@ namespace klevr.Concrete.Persistence
             }
             catch(Exception ex) { }
             return false;
+        }
+
+        public List<Transfer> GetBatchOfTransfersOverPeriod(DateTime start, DateTime end)
+        {
+            try
+            {
+                List<Transfer> transfers = _db.Transfers.Where(t => t.TransferDate > start && t.TransferDate < end).Take(10).ToList();
+                return transfers;
+            }
+            catch(Exception) { }
+            return null;
         }
     }
 }

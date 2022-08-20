@@ -20,8 +20,5 @@ namespace klevr.Concrete.EF
 
         public List<Account> Accounts { get; set; }
 
-        public List<Transfer> OutgoingTransfers { get; set; }
-        public List<Transfer> IncomingTransfers { get; set; }
-
     }
 }

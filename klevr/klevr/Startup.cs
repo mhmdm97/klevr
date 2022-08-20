@@ -33,7 +33,9 @@ namespace klevr
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
             var allowedHostsArr = Configuration.GetSection("AllowedHosts").Get<string>();
             services.AddDbContext<DBContext>(options =>
                options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
@@ -54,6 +56,7 @@ namespace klevr
             //inject repos
             services.AddTransient<ITransferRepository, TransferRepository>();
             services.AddTransient<IUserLimitRepository, UserLimitRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
 
             //inject services
             services.AddScoped<ICacheService, CacheService>();

@@ -37,11 +37,11 @@ namespace klevr.Controllers
 
         }
         [HttpGet("CheckTransferValidity")]
-        public IActionResult CheckTransferValidity(Guid userId, double transactionAmount)
+        public IActionResult CheckTransferValidity(Guid userId, Guid accountId, double transactionAmount)
         {
             try
             {
-                var validity = _userLimitRepository.CheckTransactionValidity(userId, transactionAmount);
+                var validity = _userLimitRepository.CheckTransactionValidity(userId, accountId, transactionAmount);
                 if (validity.Success)
                     return StatusCode(StatusCodes.Status200OK, validity.Message);
                 return StatusCode(StatusCodes.Status406NotAcceptable, validity.Message);
