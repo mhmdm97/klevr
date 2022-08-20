@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using klevr.Concrete.EF;
+using klevr.Helpers;
+using klevr.InMemoryCacheModule;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -41,6 +43,13 @@ namespace klevr
                     builder.WithOrigins(allowedHostsArr).WithMethods(HttpMethods.Get, HttpMethods.Post, HttpMethods.Put, HttpMethods.Delete, HttpMethods.Options).WithHeaders(HeaderNames.ContentType, HeaderNames.AccessControlAllowOrigin, HeaderNames.AccessControlRequestHeaders, HeaderNames.Authorization);
                 });
             });
+
+            //get data from app settings and init into class
+            var appSettingsSection = Configuration.GetSection("CacheSettings");
+            services.Configure<CacheSettings>(appSettingsSection);
+
+            //init caching module
+            services.AddScoped<ICacheService, CacheService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
