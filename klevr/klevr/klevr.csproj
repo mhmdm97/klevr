@@ -5,4 +5,36 @@
   </PropertyGroup>
 
 
+  <ItemGroup>
+    <None Remove="Microsoft.EntityFrameworkCore" />
+    <None Remove="Concrete\" />
+    <None Remove="Concrete\EF\" />
+    <None Remove="Microsoft.EntityFrameworkCore.SqlServer" />
+    <None Remove="Concrete\Persistence\" />
+    <None Remove="Core\" />
+    <None Remove="Core\ViewModels\" />
+    <None Remove="Helpers\" />
+    <None Remove="InMemoryCacheModule\" />
+    <None Remove="System.Runtime.Caching" />
+    <None Remove="Core\Repository\" />
+    <None Remove="Core\TransferParamModel\" />
+    <None Remove="Microsoft.AspNetCore.Mvc.NewtonsoftJson" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.17" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.17" />
+    <PackageReference Include="System.Runtime.Caching" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.28" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Concrete\" />
+    <Folder Include="Concrete\EF\" />
+    <Folder Include="Concrete\Persistence\" />
+    <Folder Include="Core\" />
+    <Folder Include="Core\ViewModels\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="InMemoryCacheModule\" />
+    <Folder Include="Core\Repository\" />
+    <Folder Include="Core\TransferParamModel\" />
+  </ItemGroup>
 </Project>
