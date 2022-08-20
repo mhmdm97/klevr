@@ -7,21 +7,28 @@ using klevr.Helpers;
 using klevr.InMemoryCacheModule;
 using System.Linq;
 using Microsoft.Extensions.Options;
+using klevr.Core.ViewModels;
 
 namespace klevr.Concrete.Persistence
 {
     public class UserLimitRepository : IUserLimitRepository
     {
         private readonly DBContext _db;
+
+        private readonly ITransferRepository _transferRepository;
+
         private readonly ICacheService _cacheService;
         private readonly CacheSettings _cacheSettings;
         private readonly string cacheKey = "userLimits";
 
-        public UserLimitRepository(IOptions<CacheSettings> cacheSettings, ICacheService cacheService, DBContext db)
+        public UserLimitRepository(IOptions<CacheSettings> cacheSettings, ICacheService cacheService, ITransferRepository transferRepository, DBContext db)
         {
             _cacheSettings = cacheSettings.Value;
             _cacheService = cacheService;
+
             _db = db;
+
+            _transferRepository = transferRepository;
         }
 
         public List<UserLimits> GetUserLimits()
@@ -58,6 +65,33 @@ namespace klevr.Concrete.Persistence
             }
             catch (Exception) { }
             return false;
-        } 
+        }
+
+        public BaseViewModel CheckTransactionValidity(string userId, double transactionAmount)
+        {
+            try
+            {
+                var userLimit = _db.UserLimits.Where(uL => uL.UserId == userId).FirstOrDefault();
+                if (userLimit != null)
+                    return new BaseViewModel { Success = false, Message = "We ran into an error!" };
+                //check transaction limit 
+                if (transactionAmount > userLimit.TransactionAmountLimit)
+                    return new BaseViewModel { Success = false, Message = "Transaction over limit" };
+
+                //check daily limit
+                var transactions = _transferRepository.GetUserDailyTransfers(userId);
+                double transactionsSum = 0;
+                foreach (var transaction in transactions)
+                {
+                    transactionsSum += transaction.TransferAmount;
+                }
+                if (transactionsSum + transactionAmount > userLimit.DailyAmountLimit)
+                    return new BaseViewModel { Success = false, Message = "Transaction would pass daily limit" };
+
+                return new BaseViewModel { Success = true, Message = "Transaction is valid" };
+            }
+            catch(Exception) { }
+            return new BaseViewModel { Success = false, Message = "We ran into an error!" };
+        }
     }
 }

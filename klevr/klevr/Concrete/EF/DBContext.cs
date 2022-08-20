@@ -41,13 +41,47 @@ namespace klevr.Concrete.EF
                 DOB = new DateTime(1997, 2, 9),
                 Gender = 0
             });
+            modelBuilder.Entity<User>().HasData(new User
+            {
+                UserId = "1",
+                FirstName = "Nour",
+                MiddleName = "Bassam",
+                LastName = "Mortada",
+                DOB = new DateTime(1998, 11, 28),
+                Gender = 1
+            });
 
             modelBuilder.Entity<UserLimits>().HasData(new UserLimits
             {
                 UserLimitsId = "0",
-                TransactionAmountLimit = 1000,
-                DailyAmountLimit = 200,
+                TransactionAmountLimit = 500,
+                DailyAmountLimit = 1000,
                 UserId = "0"
+            });
+
+            modelBuilder.Entity<UserLimits>().HasData(new UserLimits
+            {
+                UserLimitsId = "1",
+                TransactionAmountLimit = 200,
+                DailyAmountLimit = 1000,
+                UserId = "1"
+            });
+
+            modelBuilder.Entity<Transfer>().HasData(new Transfer
+            {
+                TransferId = "0",
+                TransferAmount = 300,
+                TransferDate = DateTime.Now,
+                OriginUserId = "0",
+                TargetUserId = "1"
+            });
+            modelBuilder.Entity<Transfer>().HasData(new Transfer
+            {
+                TransferId = "1",
+                TransferAmount = 400,
+                TransferDate = DateTime.Now,
+                OriginUserId = "0",
+                TargetUserId = "1"
             });
         }
     }

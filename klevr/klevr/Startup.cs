@@ -52,6 +52,7 @@ namespace klevr
 
 
             //inject repos
+            services.AddTransient<ITransferRepository, TransferRepository>();
             services.AddTransient<IUserLimitRepository, UserLimitRepository>();
 
             //inject services

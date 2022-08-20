@@ -36,5 +36,19 @@ namespace klevr.Controllers
             return StatusCode(StatusCodes.Status500InternalServerError);
 
         }
+        [HttpGet("CheckTransferValidity")]
+        public IActionResult CheckTransferValidity(string userId, double transactionAmount)
+        {
+            try
+            {
+                var validity = _userLimitRepository.CheckTransactionValidity(userId, transactionAmount);
+                if (validity.Success)
+                    return StatusCode(StatusCodes.Status200OK, validity.Message);
+                return StatusCode(StatusCodes.Status406NotAcceptable, validity.Message);
+            }
+            catch (Exception) { }
+            return StatusCode(StatusCodes.Status500InternalServerError);
+
+        }
     }
 }

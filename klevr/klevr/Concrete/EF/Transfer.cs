@@ -8,7 +8,7 @@ namespace klevr.Concrete.EF
         [Key]
         public string TransferId { get; set; }
         public double TransferAmount { get; set; }
-        public string TransferCurrency { get; set; }
+        public DateTime TransferDate { get; set; }
 
         //relations
         public string OriginUserId { get; set; }
